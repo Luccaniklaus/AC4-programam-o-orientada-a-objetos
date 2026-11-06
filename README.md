@@ -154,4 +154,4 @@ Resultado esperado: **400 Bad Request** com a lista de campos inválidos.
 ![403](docs/img/user-403.png)
 
 ## 10. Vídeo de apresentação
-Link: _colar aqui_
+](https://youtu.be/WeFHoxuUECg)
