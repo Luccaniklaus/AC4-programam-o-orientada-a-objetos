@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Brinquedos Esportivos Kids</title>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+</head>
+<body>
+<header class="topo">
+    <h1>Brinquedos Esportivos Kids</h1>
+    <a class="botao" th:href="@{/login}">Entrar</a>
+</header>
+
+<main>
+    <section class="hero">
+        <h2>Diversão em movimento para crianças de até 15 anos</h2>
+        <p>Bolas, patins, bicicletas e muito mais, com classificação de idade e tamanho para cada brinquedo.</p>
+        <a class="botao" th:href="@{/painel}">Acessar o catálogo</a>
+    </section>
+
+    <section class="cards">
+        <div class="card">
+            <h3>Esporte e diversão</h3>
+            <p>Brinquedos que estimulam a atividade física e o trabalho em equipe.</p>
+        </div>
+        <div class="card">
+            <h3>Para cada idade</h3>
+            <p>Classificação de 0 a 15 anos para escolher o brinquedo certo.</p>
+        </div>
+        <div class="card">
+            <h3>Catálogo sempre atualizado</h3>
+            <p>Nossa equipe cadastra e atualiza os brinquedos em um painel seguro.</p>
+        </div>
+    </section>
+</main>
+
+<footer>Brinquedos Esportivos Kids &middot; Projeto AC4 &ndash; Spring Boot</footer>
+</body>
+</html>

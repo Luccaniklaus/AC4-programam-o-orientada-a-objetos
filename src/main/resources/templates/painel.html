@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Painel - Brinquedos Esportivos Kids</title>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+</head>
+<body>
+<header class="topo">
+    <h1>Catálogo de brinquedos</h1>
+    <div>
+        <span th:text="${usuario}">usuario</span>
+        (<span th:text="${admin} ? 'ADMIN' : 'USER'">perfil</span>)
+        <form class="inline" th:action="@{/logout}" method="post">
+            <button type="submit" class="botao secundario">Sair</button>
+        </form>
+    </div>
+</header>
+
+<main>
+    <div th:if="${mensagem}" class="alerta ok" th:text="${mensagem}">Mensagem</div>
+
+    <!-- Formulário de cadastro/edição: somente ADMIN -->
+    <section class="form-card" th:if="${admin}">
+        <h2 th:text="${brinquedo.id == null} ? 'Novo brinquedo' : 'Editar brinquedo #' + ${brinquedo.id}">Novo brinquedo</h2>
+
+        <form th:action="@{/painel/salvar}" th:object="${brinquedo}" method="post">
+            <input type="hidden" th:field="*{id}">
+
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" th:field="*{nome}">
+            <span class="erro-campo" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Erro</span>
+
+            <label for="tipo">Tipo</label>
+            <input type="text" id="tipo" th:field="*{tipo}">
+            <span class="erro-campo" th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}">Erro</span>
+
+            <label for="classificacao">Classificação (idade mínima, de 0 a 15)</label>
+            <input type="number" id="classificacao" min="0" max="15" th:field="*{classificacao}">
+            <span class="erro-campo" th:if="${#fields.hasErrors('classificacao')}" th:errors="*{classificacao}">Erro</span>
+
+            <label for="tamanho">Tamanho</label>
+            <input type="text" id="tamanho" th:field="*{tamanho}">
+            <span class="erro-campo" th:if="${#fields.hasErrors('tamanho')}" th:errors="*{tamanho}">Erro</span>
+
+            <label for="preco">Preço (R$)</label>
+            <input type="number" id="preco" step="0.01" min="0.01" th:field="*{preco}">
+            <span class="erro-campo" th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}">Erro</span>
+
+            <p>
+                <button type="submit" class="botao">Salvar</button>
+                <a class="botao secundario" th:href="@{/painel}">Limpar</a>
+            </p>
+        </form>
+    </section>
+
+    <section>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Tipo</th>
+                <th>Classificação</th>
+                <th>Tamanho</th>
+                <th>Preço</th>
+                <th th:if="${admin}">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="b : ${brinquedos}">
+                <td th:text="${b.id}">1</td>
+                <td th:text="${b.nome}">Nome</td>
+                <td th:text="${b.tipo}">Tipo</td>
+                <td th:text="${b.classificacao} + '+ anos'">6+ anos</td>
+                <td th:text="${b.tamanho}">M</td>
+                <td th:text="'R$ ' + ${#numbers.formatDecimal(b.preco, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
+                <td class="acoes" th:if="${admin}">
+                    <a th:href="@{/painel/editar/{id}(id=${b.id})}">Editar</a>
+                    <form class="inline" th:action="@{/painel/excluir/{id}(id=${b.id})}" method="post"
+                          onsubmit="return confirm('Excluir este brinquedo?');">
+                        <button type="submit" class="botao perigo">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(brinquedos)}">
+                <td colspan="7">Nenhum brinquedo cadastrado.</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>
